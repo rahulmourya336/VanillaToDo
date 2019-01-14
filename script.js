@@ -24,10 +24,10 @@ const addTask = _ => {
     }
     let localStorageLength = localStorage.length;
     // localStorageLength === 0 ? localStorageLength = 1 : localStorageLength += 1;
-    localStorage.setItem(localStorageLength, value);
+    // localStorage.setItem(localStorageLength, value); /* Old scheme to store value */
+    localStorage.setItem(localStorageLength, [title = value, flag = false]);
     console.log(localStorage.length, localStorage.getItem(localStorageLength));
-    $('#working_task').empty();
-    addTaskUI();
+    reRender();
 
 }
 
@@ -50,38 +50,66 @@ const addTaskUI = _ => {
             defaultMessage.remove();
         }
         for (let key in Object.keys(localStorage)) {
+            parent = document.getElementById('working_task');
+            let flag = localStorage.getItem(key).split(',')[1].trim();
+
+            if (flag === "true") {
+                console.warn("Found Completed Task");
+                parent = document.getElementById('completed_task');
+            }
+
+            // ______________________________________________
 
             const label_ = document.createElement('label');
             label_.className = "form-checkbox";
 
             const input_ = document.createElement('input');
             input_.type = "checkbox";
+            if (flag === "true") {
+                input_.setAttribute('checked','');
+            }
 
             const icon_ = document.createElement('i');
             icon_.className = "form-icon";
+            icon_.setAttribute('onclick', `completedTask(${key})`);
 
             const button_ = document.createElement('button');
             button_.className = "btn btn-clear float-right tooltip";
             button_.setAttribute('data-tooltip', 'Delete Task');
 
+
+
             // console.log(localStorage)
-            label_.innerText = localStorage.getItem(key);
+            label_.innerText = localStorage.getItem(key).split(',')[0];
             console.info("key Value: " + localStorage.getItem(key));
-            label_.setAttribute('id', `${localStorage.key(localStorage.getItem(key))}`);
-            button_.setAttribute('onclick', `removeTask(${localStorage.key(localStorage.getItem(key))})`);
+            label_.setAttribute('id', key);
+            button_.setAttribute('onclick', `removeTask(${key})`);
+
+
             label_.append(input_, icon_, button_);
             parent.appendChild(label_);
         }
     }
 }
 
+const reRender = _ => {
+    $('#working_task').empty();
+    $('#completed_task').empty();
+    addTaskUI();
+}
+
 const removeTask = (id) => {
-    console.warn('Item Removed')
+    console.warn('Task Removed');
     document.getElementById(id).remove();
     console.log(localStorage.removeItem(id));
-    $('#working_task').empty();
-    addTaskUI();
+    reRender();
+}
 
+const completedTask = (id) => {
+    console.warn('Task Checked');
+    let value = localStorage.getItem(id).split(',')[0].trim();
+    localStorage.setItem(id, [title = value, flag = true]);
+    reRender();
 }
 
 const resetApp = _ => {
@@ -174,7 +202,7 @@ const userDB = _ => {
 const notify = (message_, className_, elementID, parentID) => {
 
     let el = document.createElement('div');
-    el.className = className_; 
+    el.className = className_;
     el.innerText = message_;
     el.setAttribute('id', elementID);
 
