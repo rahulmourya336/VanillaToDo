@@ -1,10 +1,10 @@
 /**
  * TODO:
- *  1. Show error if something went wrong. 
- * 
+ * * 
  * Error stack:
  *  1. Shake bug fix
  *  2. Add IDB Support
+ *  3. Toggle Check
  *     
  */
 
@@ -50,8 +50,9 @@ const addTaskUI = _ => {
         if (defaultMessage) {
             defaultMessage.remove();
         }
-        for (let key in Object.keys(localStorage)) {
+        for (let key in localStorage) {
             parent = document.getElementById('working_task');
+            console.error("Key Value : " + key);
             let flag = localStorage.getItem(key).split(',')[1].trim() === "true";
 
             if (flag) {
@@ -76,7 +77,7 @@ const addTaskUI = _ => {
             const icon_ = document.createElement('i');
             icon_.className = "form-icon";
             icon_.setAttribute('onclick', `completedTask(${key})`);
-
+            
             const button_ = document.createElement('button');
             button_.className = "btn btn-clear float-right tooltip";
             button_.setAttribute('data-tooltip', 'Delete Task');
@@ -111,8 +112,15 @@ const removeTask = (id) => {
 
 const completedTask = (id) => {
     console.warn('Task Checked');
-    let value = localStorage.getItem(id).split(',')[0].trim();
-    localStorage.setItem(id, [title = value, flag = true]);
+    let x = localStorage.getItem(id).split(',')[1];
+    console.warn(x);
+    if (x === "true") {
+        let value = localStorage.getItem(id).split(',')[0].trim();
+        localStorage.setItem(id, [title = value, flag = false]);
+    } else {
+        let value = localStorage.getItem(id).split(',')[0].trim();
+        localStorage.setItem(id, [title = value, flag = true]);
+    }
     reRender();
 }
 

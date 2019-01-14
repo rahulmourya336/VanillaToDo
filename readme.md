@@ -6,4 +6,6 @@
 `npm install`
 
 #### Run Project
+`npm install live-server --only=dev`
+
 `live-server`
