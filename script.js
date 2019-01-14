@@ -1,6 +1,7 @@
 /**
  * TODO:
- * * 
+ *  1. Add PWA support
+ * 
  * Error stack:
  *  1. Shake bug fix
  *  2. Add IDB Support
