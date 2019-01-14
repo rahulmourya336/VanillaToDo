@@ -52,48 +52,53 @@ const addTaskUI = _ => {
             defaultMessage.remove();
         }
         for (let key in localStorage) {
-            parent = document.getElementById('working_task');
-            console.error("Key Value : " + key);
-            let flag = localStorage.getItem(key).split(',')[1].trim() === "true";
+            if (localStorage.hasOwnProperty(key)) {
 
-            if (flag) {
-                // console.warn("Found Completed Task");
-                parent = document.getElementById('completed_task');
+
+
+                parent = document.getElementById('working_task');
+                // console.error("Key Value : " + key);
+                let flag = localStorage.getItem(key).split(',')[1].trim() === "true";
+
+                if (flag) {
+                    // console.warn("Found Completed Task");
+                    parent = document.getElementById('completed_task');
+                }
+
+                // ______________________________________________
+
+                let label_ = document.createElement('label');
+                if (flag) {
+                    label_ = document.createElement('s');
+                }
+                label_.className = "form-checkbox";
+
+                const input_ = document.createElement('input');
+                input_.type = "checkbox";
+                if (flag) {
+                    input_.setAttribute('checked', '');
+                }
+
+                const icon_ = document.createElement('i');
+                icon_.className = "form-icon";
+                icon_.setAttribute('onclick', `completedTask(${key})`);
+
+                const button_ = document.createElement('button');
+                button_.className = "btn btn-clear float-right tooltip";
+                button_.setAttribute('data-tooltip', 'Delete Task');
+
+
+
+                // console.log(localStorage)
+                label_.innerText = localStorage.getItem(key).split(',')[0];
+                console.info("key Value: " + localStorage.getItem(key));
+                label_.setAttribute('id', key);
+                button_.setAttribute('onclick', `removeTask(${key})`);
+
+
+                label_.append(input_, icon_, button_);
+                parent.appendChild(label_);
             }
-
-            // ______________________________________________
-
-            let label_ = document.createElement('label');
-            if (flag) {
-                label_ = document.createElement('s');
-            }
-            label_.className = "form-checkbox";
-
-            const input_ = document.createElement('input');
-            input_.type = "checkbox";
-            if (flag) {
-                input_.setAttribute('checked', '');
-            }
-
-            const icon_ = document.createElement('i');
-            icon_.className = "form-icon";
-            icon_.setAttribute('onclick', `completedTask(${key})`);
-            
-            const button_ = document.createElement('button');
-            button_.className = "btn btn-clear float-right tooltip";
-            button_.setAttribute('data-tooltip', 'Delete Task');
-
-
-
-            // console.log(localStorage)
-            label_.innerText = localStorage.getItem(key).split(',')[0];
-            console.info("key Value: " + localStorage.getItem(key));
-            label_.setAttribute('id', key);
-            button_.setAttribute('onclick', `removeTask(${key})`);
-
-
-            label_.append(input_, icon_, button_);
-            parent.appendChild(label_);
         }
     }
 }
@@ -189,8 +194,8 @@ const shakeTextBox = _ => {
 
 
 const updateAvatar = (username) => {
-   // let username = document.getElementById('username').value;
-   
+    // let username = document.getElementById('username').value;
+
     console.log('Personalized username : ' + username)
 
     let avatar = document.querySelector('figure');
@@ -212,7 +217,7 @@ const setUsername = _ => {
 const getUsername = _ => {
     let name = sessionStorage.getItem('username');
     if (name) {
-        console.log('User Found : '+ name);
+        console.log('User Found : ' + name);
         updateAvatar(name);
         document.getElementById('username').value = name;
     }
