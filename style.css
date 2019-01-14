@@ -4,8 +4,9 @@
 }
 
 #footer {
-    position: absolute;
+    position: relative;
     bottom: 0;
+    top: 12em;
     left: 50%;
 }
 
@@ -72,6 +73,13 @@ span.p-centered {
 
     span.p-centered {
         margin-right: -10px;
+    }
+
+    #footer {
+        position: relative;
+        bottom: 0;
+        top: 5em;
+        left: 50%;
     }
     
 

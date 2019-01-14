@@ -44,7 +44,7 @@
         <figure class="avatar avatar-lg p-centered" data-initial="X" style="background-color: #5755d9;">
         </figure>
         <span class="p-centered text-center mt-2"> Hello! <input type="text" id="username" placeholder="Enter your name"
-                autocomplete="false" oninput="updateAvatar()">
+                autocomplete="false" onblur="setUsername()">
         </span>
         <div class="divider text-center" data-content="Todo"></div>
         <div id="container">
@@ -61,43 +61,22 @@
                 </li>
 
                 <!-- menu item with form control -->
-                <li class="menu-item" id="working_task">
-                    <!-- <label class="form-checkbox">
-                        <input type="checkbox">
-                        <i class="form-icon"></i> Task Name
-
-                        <button class="btn btn-clear float-right tooltip" data-tooltip="Delete Task"></button>
-                    </label> -->
-                </li>
+                <li class="menu-item" id="working_task"></li>
 
                 <!-- menu divider -->
-                <li class="divider" data-content="COMPLETED">
-                </li>
-                <li class="menu-item" id="completed_task">
-
-                    <!-- <label class="form-checkbox">
-                            <input type="checkbox">
-                            <i class="form-icon"></i> Task Name
-    
-                            <button class="btn btn-clear float-right tooltip" data-tooltip="Delete Task"></button>
-                        </label> -->
-                </li>
-
-
+                <li class="divider" data-content="COMPLETED"></li>
+                <li class="menu-item" id="completed_task"></li>
             </ul>
         </div>
         <!-- OnDBConnect appear here -->
         <div id="status"></div>
-
 
         <div id="footer">
             <p><a href="https://github.com/rahulmourya336/VanillaToDo" target="_blank">GitHub</a> · Version <span class="version">1.0</span>
                 · <span onclick="resetApp()" id="resetApp">Reset App</span> </p>
             <p>Designed and built <strike>with <span class="text-error">♥</strike> using 🖮</span> by <a href="https://twitter.com/rahucrux"
                     target="_blank">Rahul Mourya</a>.</p>
-
         </div>
-
 </body>
 
 <script src="node_modules/jquery/dist/jquery.min.js"></script>

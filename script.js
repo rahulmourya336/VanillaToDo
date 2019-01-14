@@ -4,13 +4,14 @@
  * 
  * Error stack:
  *  1. Shake bug fix
- *  2. Fix avatar name
+ *  2. Add IDB Support
  *     
  */
 
 window.onload = _ => {
     addTaskUI();
-    userDB();
+    getUsername();
+    // userDB();
 }
 
 const addTask = _ => {
@@ -51,22 +52,25 @@ const addTaskUI = _ => {
         }
         for (let key in Object.keys(localStorage)) {
             parent = document.getElementById('working_task');
-            let flag = localStorage.getItem(key).split(',')[1].trim();
+            let flag = localStorage.getItem(key).split(',')[1].trim() === "true";
 
-            if (flag === "true") {
-                console.warn("Found Completed Task");
+            if (flag) {
+                // console.warn("Found Completed Task");
                 parent = document.getElementById('completed_task');
             }
 
             // ______________________________________________
 
-            const label_ = document.createElement('label');
+            let label_ = document.createElement('label');
+            if (flag) {
+                label_ = document.createElement('s');
+            }
             label_.className = "form-checkbox";
 
             const input_ = document.createElement('input');
             input_.type = "checkbox";
-            if (flag === "true") {
-                input_.setAttribute('checked','');
+            if (flag) {
+                input_.setAttribute('checked', '');
             }
 
             const icon_ = document.createElement('i');
@@ -157,6 +161,12 @@ const shakeTextBox = _ => {
             $("input[id=input_task]").addClass("input_shake is-error");
         }
 
+        // $("input[id=input_task]").hasClass("input_shake is-error", _ => {
+        //     $("input[id=input_task]")
+        //             .delay(200)
+        //             .removeClass("input_shake is-error");
+        //     });
+
         $("#input_task").on("webkitAnimationEnd oanimationend msAnimationEnd animationend",
             function (e) {
                 $("input[id=input_task]")
@@ -169,11 +179,9 @@ const shakeTextBox = _ => {
 }
 
 
-const updateAvatar = _ => {
-    let username = "";
-    username = document.getElementById('username').value;
-    sessionStorage.setItem('username', username);
-
+const updateAvatar = (username) => {
+   // let username = document.getElementById('username').value;
+   
     console.log('Personalized username : ' + username)
 
     let avatar = document.querySelector('figure');
@@ -186,18 +194,39 @@ const updateAvatar = _ => {
     }
 }
 
-const userDB = _ => {
-    console.info("IDB Methods");
-    let db;
-    let request = indexedDB.open("todoDB");
-    request.onerror = (event) => {
-        notify("❌ DB Error", "toast toast-error text-center mt-2", "status_message", "status");
-    };
-    request.onsuccess = function (event) {
-        db = event.target.result;
-        notify("DB Connected", "toast toast-success text-center mt-2", "status_message", "status");
-    };
+const setUsername = _ => {
+    let username = document.getElementById('username').value;
+    sessionStorage.setItem('username', username);
+    updateAvatar(username)
 }
+
+const getUsername = _ => {
+    let name = sessionStorage.getItem('username');
+    if (name) {
+        console.log('User Found : '+ name);
+        updateAvatar(name);
+        document.getElementById('username').value = name;
+    }
+}
+
+// const userDB = _ => {
+//     username = document.getElementById('username').value;
+//     username = (!username ? username = 'X' : username);
+//     console.info("IDB Methods");
+//     let db;
+//     let request = indexedDB.open("todoDB");
+//     request.onerror = (event) => {
+//         notify("❌ DB Error", "toast toast-error text-center mt-2", "status_message", "status");
+//     };
+//     request.onsuccess = function (event) {
+//         db = event.target.result;
+//         notify("DB Connected", "toast toast-success text-center mt-2", "status_message", "status");
+//         if (!db.objectStoreNames.contains('user')) {
+//             db.createObjectStore('user');
+//             db.add({username_: username});
+//           }
+//     };
+// }
 
 const notify = (message_, className_, elementID, parentID) => {
 
