@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>.: Todo App :.</title>
+    <link rel="stylesheet" href="node_modules/spectre.css/dist/spectre.min.css">
+    <link rel="stylesheet" href="node_modules/spectre.css//dist/spectre-exp.min.css">
+    <link rel="stylesheet" href="node_modules/spectre.css/dist/spectre-icons.min.css">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Metadata -->
+    <meta name="description" content="Todo Application">
+    <meta name="keywords" content="Rahul Mourya, VanillaJS, Todo app, rahulmourya336">
+    <meta name="author" content="Rahul Mourya">
+    <meta name="dns-prefetch" content="//fonts.googleapis.com" />
+
+    <!-- Open Graph Data   -->
+    <meta property="og:site_name" content="Rahulmourya336.github.io" />
+    <meta property="og:title" content="ToDo Application" />
+    <meta name="twitter:title" content="ToDo Application" />
+    <meta name="twitter:card" content="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/mozilla/36/ballot-box-with-check_2611.png" />
+    <meta name="twitter:site" content="@rahucrux" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:description" content="Todo Application" />
+    <meta property="og:description" content="Todo Application" />
+
+    <!--  Todo: Add site logo -->
+    <meta property="og:image" content="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/mozilla/36/ballot-box-with-check_2611.png" />
+    <meta name="twitter:image" content="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/mozilla/36/ballot-box-with-check_2611.png" />
+
+    <!-- favicon -->
+    <link rel="shortcut icon" type="image/png" href="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/mozilla/36/ballot-box-with-check_2611.png" />
+    <link rel="shortcut icon" type="image/png" href="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/mozilla/36/ballot-box-with-check_2611.png" />
+
+</head>
+
+<body>
+    <!-- Text-box -->
+    <div id="wrapper">
+            <div id="message"></div>
+        <figure class="avatar avatar-lg p-centered" data-initial="X" style="background-color: #5755d9;">
+        </figure>
+        <span class="p-centered text-center mt-2"> Hello! <input type="text" id="username" placeholder="Enter your name"
+                autocomplete="false" oninput="updateAvatar()">
+        </span>
+        <div class="divider text-center" data-content="Todo"></div>
+        <div id="container">
+            <div class="input-group">
+                <input type="text" class="form-input" placeholder="Task Name" id="input_task" />
+                <button class="btn btn-primary input-group-btn" onclick="addTask()" type="submit">Submit</button>
+            </div>
+        </div>
+
+        <div id="working">
+            <ul class="menu">
+                <!-- menu header text -->
+                <li class="divider" data-content="WORKING">
+                </li>
+
+                <!-- menu item with form control -->
+                <li class="menu-item" id="working_task">
+                    <!-- <label class="form-checkbox">
+                        <input type="checkbox">
+                        <i class="form-icon"></i> Task Name
+
+                        <button class="btn btn-clear float-right tooltip" data-tooltip="Delete Task"></button>
+                    </label> -->
+                </li>
+
+                <!-- menu divider -->
+                <li class="divider" data-content="COMPLETED">
+
+                </li>
+                <!-- menu item with badge -->
+
+            </ul>
+        </div>
+        <!-- OnAdd appear here -->
+        <div id="status"></div>
+
+
+    <div id="footer">
+        <p><a href="https://github.com/rahuhlmourya336" target="_blank">GitHub</a> · Version <span class="version">1.0</span>
+            · <span onclick="resetApp()" id="resetApp">Reset App</span> </p>
+        <p>Designed and built <strike>with <span class="text-error">♥</strike> using 🖮</span> by <a href="https://twitter.com/rahucrux"
+                target="_blank">Rahul Mourya</a>.</p>
+
+    </div>
+
+</body>
+
+<script src="node_modules/jquery/dist/jquery.min.js"></script>
+<script src="script.js"></script>
+
+</html>
