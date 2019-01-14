@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "jquery": "^3.3.1",
+    "live-server": "^1.2.1",
     "spectre.css": "^0.5.8"
   }
 }

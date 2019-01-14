@@ -1,6 +1,11 @@
 /**
- * TODO: 
- * 1. Show error if something went wrong.
+ * TODO:
+ *  1. Show error if something went wrong. 
+ * 
+ * Error stack:
+ *  1. Shake bug fix
+ *  2. Fix avatar name
+ *     
  */
 
 window.onload = _ => {
@@ -115,7 +120,8 @@ const hide = (target) => {
  * Utilities methods
  */
 
-const shakeTextBox = async () => {
+
+const shakeTextBox = _ => {
     $("button[type=submit]").on("click", function (e) {
         e.preventDefault();
         console.warn("Venom");
