@@ -13,7 +13,11 @@
 
 let CACHE_NAME = 'static-cache';
 let urlsToCache = [
-'/'
+  'index.html',
+  'style.css',
+  'assets',
+  'node_modules',
+  'script.js'
 ];
 self.addEventListener('install', function (event) {
   console.info('Caching resources');
