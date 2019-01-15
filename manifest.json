@@ -3,19 +3,19 @@
     "name": "Vanilla Todo",
     "icons": [
       {
-        "src": "assets/images/ballot-box-check.png",
+        "src": "./assets/images/ballot-box-check-192.png",
         "type": "image/png",
         "sizes": "192x192"
       },
       {
-        "src": "assets/images/ballot-box-check.png",
+        "src": "./assets/images/ballot-box-check-512.png",
         "type": "image/png",
         "sizes": "512x512"
       }
     ],
-    "start_url": "/todo/?source=pwa",
+    "start_url": "/",
     "background_color": "#3367D6",
     "display": "standalone",
-    "scope": "/todo/",
+    "scope": "/",
     "theme_color": "#3367D6"
   }

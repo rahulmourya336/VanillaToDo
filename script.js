@@ -5,27 +5,30 @@
  * Error stack:
  *  1. Shake bug fix
  *  2. Add IDB Support
- *  
  *     
  */
 
 window.onload = _ => {
     addTaskUI();
     getUsername();
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./service-worker.js');
+    }
+
     // userDB();
 }
 
 const addTask = _ => {
     const value = document.getElementById("input_task").value;
     document.getElementById("input_task").value = null;
-    
+
     // validate input_task
     if (value.length === 0) {
         console.info("Calling Shake" + value);
         shakeTextBox();
         return;
     }
-    
+
     let localStorageLength = localStorage.length;
     localStorage.setItem(localStorageLength, [title = value, flag = false]);
     console.log(localStorage.length, localStorage.getItem(localStorageLength));
@@ -40,7 +43,7 @@ const addTaskUI = _ => {
     }
     let parent = document.getElementById('working_task');
     let taskCount = localStorage.length;
-   
+
     if (!taskCount) {
         let i_ = document.createElement('small');
         i_.className = "text-center text-secondary";
