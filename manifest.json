@@ -1,6 +1,7 @@
 {
     "short_name": "Todo",
     "name": "Vanilla Todo",
+    "entrypoint": "index.html",
     "icons": [
       {
         "src": "./assets/images/ballot-box-check-192.png",
