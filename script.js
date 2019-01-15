@@ -18,15 +18,15 @@ window.onload = _ => {
 const addTask = _ => {
     const value = document.getElementById("input_task").value;
     document.getElementById("input_task").value = null;
+    
     // validate input_task
     if (value.length === 0) {
         console.info("Calling Shake" + value);
         shakeTextBox();
         return;
     }
+    
     let localStorageLength = localStorage.length;
-    // localStorageLength === 0 ? localStorageLength = 1 : localStorageLength += 1;
-    // localStorage.setItem(localStorageLength, value); /* Old scheme to store value */
     localStorage.setItem(localStorageLength, [title = value, flag = false]);
     console.log(localStorage.length, localStorage.getItem(localStorageLength));
     reRender();
@@ -40,6 +40,7 @@ const addTaskUI = _ => {
     }
     let parent = document.getElementById('working_task');
     let taskCount = localStorage.length;
+   
     if (!taskCount) {
         let i_ = document.createElement('small');
         i_.className = "text-center text-secondary";
@@ -54,8 +55,6 @@ const addTaskUI = _ => {
         for (let key in localStorage) {
             if (localStorage.hasOwnProperty(key)) {
 
-
-
                 parent = document.getElementById('working_task');
                 // console.error("Key Value : " + key);
                 let flag = localStorage.getItem(key).split(',')[1].trim() === "true";
@@ -64,8 +63,6 @@ const addTaskUI = _ => {
                     // console.warn("Found Completed Task");
                     parent = document.getElementById('completed_task');
                 }
-
-                // ______________________________________________
 
                 let label_ = document.createElement('label');
                 if (flag) {
@@ -87,14 +84,11 @@ const addTaskUI = _ => {
                 button_.className = "btn btn-clear float-right tooltip";
                 button_.setAttribute('data-tooltip', 'Delete Task');
 
-
-
                 // console.log(localStorage)
                 label_.innerText = localStorage.getItem(key).split(',')[0];
                 console.info("key Value: " + localStorage.getItem(key));
                 label_.setAttribute('id', key);
                 button_.setAttribute('onclick', `removeTask(${key})`);
-
 
                 label_.append(input_, icon_, button_);
                 parent.appendChild(label_);
@@ -174,13 +168,6 @@ const shakeTextBox = _ => {
         if (!$("#input_task").val()) {
             $("input[id=input_task]").addClass("input_shake is-error");
         }
-
-        // $("input[id=input_task]").hasClass("input_shake is-error", _ => {
-        //     $("input[id=input_task]")
-        //             .delay(200)
-        //             .removeClass("input_shake is-error");
-        //     });
-
         $("#input_task").on("webkitAnimationEnd oanimationend msAnimationEnd animationend",
             function (e) {
                 $("input[id=input_task]")
@@ -222,25 +209,6 @@ const getUsername = _ => {
         document.getElementById('username').value = name;
     }
 }
-
-// const userDB = _ => {
-//     username = document.getElementById('username').value;
-//     username = (!username ? username = 'X' : username);
-//     console.info("IDB Methods");
-//     let db;
-//     let request = indexedDB.open("todoDB");
-//     request.onerror = (event) => {
-//         notify("❌ DB Error", "toast toast-error text-center mt-2", "status_message", "status");
-//     };
-//     request.onsuccess = function (event) {
-//         db = event.target.result;
-//         notify("DB Connected", "toast toast-success text-center mt-2", "status_message", "status");
-//         if (!db.objectStoreNames.contains('user')) {
-//             db.createObjectStore('user');
-//             db.add({username_: username});
-//           }
-//     };
-// }
 
 const notify = (message_, className_, elementID, parentID) => {
 
