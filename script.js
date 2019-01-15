@@ -1,11 +1,11 @@
 /**
  * TODO:
- *  1. Add PWA support
+ *  1. Add PWA support [Working]
  * 
  * Error stack:
  *  1. Shake bug fix
  *  2. Add IDB Support
- *  3. Toggle Check
+ *  
  *     
  */
 

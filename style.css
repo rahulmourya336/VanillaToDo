@@ -46,6 +46,7 @@ span.p-centered {
 .input_shake {
     animation: kf_shake 0.4s 1 linear;
 }
+
 @keyframes kf_shake {
     0% { -webkit-transform: translate(30px); }
     20% { -webkit-transform: translate(-30px); }

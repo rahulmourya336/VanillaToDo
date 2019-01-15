@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="utf-8" />
@@ -46,12 +46,13 @@
         <div id="message"></div>
         <figure class="avatar avatar-lg p-centered" data-initial="X" style="background-color: #5755d9;">
         </figure>
-        <span class="p-centered text-center mt-2"> Hello! <input type="text" id="username" placeholder="Enter your name"
+        <span class="p-centered text-center mt-2"><label for="username" class="d-none">Enter Your name</label> Hello! <input type="text" id="username" placeholder="Enter your name"
                 autocomplete="false" onblur="setUsername()">
         </span>
         <div class="divider text-center" data-content="Todo"></div>
         <div id="container">
             <div class="input-group">
+                <label for="input_task" class="d-none">Enter task name</label>
                 <input type="text" class="form-input" placeholder="Task Name" id="input_task" />
                 <button class="btn btn-primary input-group-btn" onclick="addTask()" type="submit">Submit</button>
             </div>
@@ -77,7 +78,7 @@
         <div id="footer">
             <p><a href="https://github.com/rahulmourya336/VanillaToDo" target="_blank">GitHub</a> · Version <span class="version">1.0</span>
                 · <span onclick="resetApp()" id="resetApp">Reset App</span> </p>
-            <p>Designed and built <strike>with <span class="text-error">♥</strike> using ⌨ (Keyboard)</span> by <a href="https://twitter.com/rahucrux"
+            <p>Designed and built <s>with <span class="text-error">♥</s> using ⌨ (Keyboard)</span> by <a href="https://twitter.com/rahucrux"
                     target="_blank">Rahul Mourya</a>.</p>
         </div>
 </body>
