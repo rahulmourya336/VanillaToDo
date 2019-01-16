@@ -47,6 +47,10 @@ span.p-centered {
     animation: kf_shake 0.4s 1 linear;
 }
 
+.card {
+    width: 22vw;
+}
+
 @keyframes kf_shake {
     0% { -webkit-transform: translate(30px); }
     20% { -webkit-transform: translate(-30px); }

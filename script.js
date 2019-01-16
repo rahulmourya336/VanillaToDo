@@ -21,22 +21,41 @@ window.onload = _ => {
 }
 
 const addTask = _ => {
-    const value = document.getElementById("input_task").value;
+    const value = document.getElementById("input_task").value.trim();
     document.getElementById("input_task").value = null;
     console.log('Input Value', + value.length);
 
     // validate input_task
-    if (value.trim().length === 0) {
+    if (value.length === 0) {
         console.info("Calling Shake" + value);
         shakeTextBox();
         return;
     }
+
+    // Check for same task
+    for (let key in localStorage) {
+        if (localStorage.hasOwnProperty(key)) {
+            if (value === localStorage.getItem(key)[0]) {
+                console.warn('Duplicate entry : Raising notification');
+                notify('Already exist', 'text-left', 'same-task');
+            }
+            // show popover
+        }
+    }
+
 
     let localStorageLength = localStorage.length;
     localStorage.setItem(localStorageLength, [title = value, flag = false]);
     console.log(localStorage.length, localStorage.getItem(localStorageLength));
     reRender();
 
+}
+
+const redundantTask = _ => {
+    // After ACCEPT or DISCARD
+        document.getElementById('same-task').remove();
+        document.getElementById('secondary-divider').remove();
+    return;
 }
 
 const addTaskUI = _ => {
@@ -211,17 +230,45 @@ const getUsername = _ => {
     }
 }
 
-const notify = (message_, className_, elementID, parentID) => {
+
+
+const notify = (message_, className_, elementID, parentID="status") => {
+
+    let divider = document.createElement('div');
+    divider.className = "divider";
+    divider.setAttribute('id', 'secondary-divider');
 
     let el = document.createElement('div');
     el.className = className_;
     el.innerText = message_;
     el.setAttribute('id', elementID);
 
+    let btn_accept = document.createElement('button');
+    let btn_discard = document.createElement('button');
+
+    btn_accept.className = 'btn btn-primary float-right btn-sm';
+    btn_discard.className = 'btn btn-link float-right mx-2 btn-sm';
+
+    btn_accept.setAttribute('onclick', `redundantTask();return true;`);
+    btn_discard.setAttribute('onclick', `redundantTask();return false`);
+
+    btn_accept.innerText = "Add";
+    btn_discard.innerText = 'Discard';
+
+    el.append(btn_accept, btn_discard);
+
     let parent = document.getElementById(parentID);
+
     parent.append(el);
 
-    setTimeout(() => {
-        hide(parentID)
-    }, 1500)
+    document.getElementById('notification').append(divider);
+
+
+
+
+    // setTimeout(() => {
+    //     hide(parentID)
+    // }, 1500)
 }
+
+// notify('Already exist', 'text-left', 'same-task', 'status');
