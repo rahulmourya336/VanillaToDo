@@ -1,16 +1,3 @@
-// self.addEventListener('install', (event) => {
-//   console.log('👷', 'install', event);
-  
-//   event.respondWith(
-//     caches.match(event.request)
-//     .then(function(response) {
-//       return response || fetchAndCache(event.request);
-//     })
-//   );
-  
-//   self.skipWaiting();
-// });
-
 let CACHE_NAME = 'static-cache';
 let urlsToCache = [
   'index.html',
@@ -54,21 +41,3 @@ self.addEventListener('fetch', function (event) {
     })
   );
 });
-
-
-
-async function fetchAndCache(url) {
-  try {
-    const response = await fetch(url);
-    // Check if we received a valid response
-    if (!response.ok) {
-      throw Error(response.statusText);
-    }
-    const cache = await caches.open(CACHE_NAME);
-    cache.put(url, response.clone());
-    return response;
-  }
-  catch (error) {
-    console.log('Request failed:', error);
-  }
-}
