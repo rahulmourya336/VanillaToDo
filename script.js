@@ -1,9 +1,9 @@
 /**
  * TODO:
- *  1. Add PWA support [Working]
+ *  1. Add PWA support [Done]
  * 
  * Error stack:
- *  1. Shake bug fix
+ *  1. Shake bug fix [Working]
  *  2. Add IDB Support
  *     
  */
@@ -11,9 +11,11 @@
 window.onload = _ => {
     addTaskUI();
     getUsername();
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('./service-worker.js');
-    }
+
+    // Uncomment to run service worker
+    // if ('serviceWorker' in navigator) {
+    //     navigator.serviceWorker.register('./service-worker.js');
+    // }
 
     // userDB();
 }
@@ -21,9 +23,10 @@ window.onload = _ => {
 const addTask = _ => {
     const value = document.getElementById("input_task").value;
     document.getElementById("input_task").value = null;
+    console.log('Input Value', + value.length);
 
     // validate input_task
-    if (value.length === 0) {
+    if (value.trim().length === 0) {
         console.info("Calling Shake" + value);
         shakeTextBox();
         return;
@@ -108,8 +111,8 @@ const reRender = _ => {
 
 const removeTask = (id) => {
     console.warn('Task Removed');
+    localStorage.removeItem(id);
     document.getElementById(id).remove();
-    console.log(localStorage.removeItem(id));
     reRender();
 }
 
@@ -165,20 +168,15 @@ const hide = (target) => {
 
 
 const shakeTextBox = _ => {
-    $("button[type=submit]").on("click", function (e) {
+    document.getElementById("btn-submit-task").addEventListener("click", (e) => {
         e.preventDefault();
         console.warn("Venom");
-        if (!$("#input_task").val()) {
-            $("input[id=input_task]").addClass("input_shake is-error");
-        }
-        $("#input_task").on("webkitAnimationEnd oanimationend msAnimationEnd animationend",
-            function (e) {
-                $("input[id=input_task]")
-                    .delay(200)
-                    .removeClass("input_shake is-error");
-            }
-        );
+        document.getElementById("input_task").className = 'form-input input_shake is-error';
 
+        document.getElementById('input_task').addEventListener('animationend', (e) => {
+            setTimeout(_ => { }, 100);
+            document.getElementById("input_task").className = 'form-input';
+        });
     });
 }
 
