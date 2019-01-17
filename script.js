@@ -53,8 +53,8 @@ const addTask = _ => {
 
 const redundantTask = _ => {
     // After ACCEPT or DISCARD
-        document.getElementById('same-task').remove();
-        document.getElementById('secondary-divider').remove();
+    document.getElementById('same-task').remove();
+    document.getElementById('secondary-divider').remove();
     return;
 }
 
@@ -109,13 +109,15 @@ const addTaskUI = _ => {
                 button_.className = "btn btn-clear float-right tooltip";
                 button_.setAttribute('data-tooltip', 'Delete Task');
 
-                // console.log(localStorage)
-                label_.innerText = localStorage.getItem(key).split(',')[0];
-                console.info("key Value: " + localStorage.getItem(key));
+                const editIcon_ = document.createElement('i');
+                editIcon_.className = "icon icon-edit btn-clear float-right ";
+                editIcon_.setAttribute('onclick', `editTask(${key})`);
+
+                label_.innerText = localStorage.getItem(key).split(',')[0];        
+                console.info("key Value: " + localStorage.getItem(key) + ' | Key : ' + key);
                 label_.setAttribute('id', key);
                 button_.setAttribute('onclick', `removeTask(${key})`);
-
-                label_.append(input_, icon_, button_);
+                label_.append(input_, icon_, button_, editIcon_);
                 parent.appendChild(label_);
             }
         }
@@ -147,6 +149,34 @@ const completedTask = (id) => {
         localStorage.setItem(id, [title = value, flag = true]);
     }
     reRender();
+}
+
+const editTask = (id) => {
+    let el = document.getElementById('btn-submit-task');
+    el.innerText = "Update";
+    el.className = "btn btn-success input-group-btn";
+    el.setAttribute('onclick', `updateTask(${id})`);
+
+    let value = localStorage.getItem(id).split(',')[0];
+    document.getElementById('input_task').value = value;
+}
+
+const updateTask = (id) => {
+    let newValue = document.getElementById('input_task').value.trim();
+    let taskStatus = localStorage.getItem(id).split(',')[1];
+    localStorage.setItem(id, [newValue, taskStatus]);
+    resetSubmitButton();
+    reRender();
+}
+
+const resetSubmitButton = _ => {
+    let el = document.getElementById('btn-submit-task');
+    el.innerText = "Add Task";
+    el.className = "btn btn-primary input-group-btn";
+    el.setAttribute('onclick', `addTask()`);
+    // Reset input too!
+    document.getElementById("input_task").value = null;
+
 }
 
 const resetApp = _ => {
@@ -232,7 +262,7 @@ const getUsername = _ => {
 
 
 
-const notify = (message_, className_, elementID, parentID="status") => {
+const notify = (message_, className_, elementID, parentID = "status") => {
 
     let divider = document.createElement('div');
     divider.className = "divider";
