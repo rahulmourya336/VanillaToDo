@@ -5,39 +5,10 @@ let urlsToCache = [
   'assets',
   'node_modules',
   'script.js',
-  'service-worker.js'
+  'service-worker.js',
 ];
-
-
-self.addEventListener('install', function(event) {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then(function(cache) {
-      return cache.addAll(urlsToCache);
-    })
-  );
-});
-
-
-
-// self.addEventListener('install', function (event) {
-//   console.info('Caching resources');
-//   event.waitUntil(
-//     caches.keys().then(function(cacheNames) {
-//       return Promise.all(
-//         cacheNames.filter(function(cacheName) {
-//           // Return true if you want to remove this cache,
-//           // but remember that caches are shared across
-//           // the whole origin
-//         }).map(function(cacheName) {
-//           return caches.delete(CACHE_NAME);
-//         })
-//       );
-//     })
-//   );
-// }); 
-
-
-self.addEventListener('activate', function(event) {
+self.addEventListener('install', function (event) {
+  console.info('Caching resources');
   event.waitUntil(
     caches.keys().then(function(cacheNames) {
       return Promise.all(
@@ -51,12 +22,12 @@ self.addEventListener('activate', function(event) {
       );
     })
   );
-});
+}); 
 
-// self.addEventListener('activate', (event) => {
-//   console.log('👷', 'activate', event);
-//   return self.clients.claim();
-// });
+self.addEventListener('activate', (event) => {
+  console.log('👷', 'activate', event);
+  return self.clients.claim();
+});
 
 self.addEventListener('fetch', function (event) {
   // console.log('👷', 'fetch', event);
@@ -71,18 +42,3 @@ self.addEventListener('fetch', function (event) {
     })
   );
 });
-
-
-// self.addEventListener('fetch', function(event) {
-//   event.respondWith(
-//     caches.open(CACHE_NAME).then(function(cache) {
-//       return cache.match(event.request).then(function(response) {
-//         var fetchPromise = fetch(event.request).then(function(networkResponse) {
-//           cache.put(event.request, networkResponse.clone());
-//           return networkResponse;
-//         })
-//         return response || fetchPromise;
-//       })
-//     })
-//   );
-// });
