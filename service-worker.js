@@ -23,9 +23,24 @@ self.addEventListener('install', function (event) {
   );
 }); 
 
-self.addEventListener('activate', (event) => {
+// self.addEventListener('activate', (event) => {
+//   console.log('👷', 'activate', event);
+//   return self.clients.claim();
+// });
+
+self.addEventListener('activate', function(event) {
   console.log('👷', 'activate', event);
-  return self.clients.claim();
+  event.waitUntil(
+    caches.keys().then(function(cacheNames) {
+      return Promise.all(
+        cacheNames.filter(function(cacheName) {
+         return true;
+        }).map(function(cacheName) {
+          return caches.delete(cacheName);
+        })
+      );
+    })
+  );
 });
 
 self.addEventListener('fetch', function (event) {

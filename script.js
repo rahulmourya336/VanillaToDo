@@ -13,9 +13,9 @@ window.onload = _ => {
     getUsername();
 
     // Uncomment to run service worker
-    // if ('serviceWorker' in navigator) {
-    //     navigator.serviceWorker.register('./service-worker.js');
-    // }
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./service-worker.js');
+    }
 
     // userDB();
 }
