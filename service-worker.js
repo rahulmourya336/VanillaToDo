@@ -4,7 +4,8 @@ let urlsToCache = [
   'style.css',
   'assets',
   'node_modules',
-  'script.js'
+  'script.js',
+  'service-worker.js'
 ];
 self.addEventListener('install', function (event) {
   console.info('Caching resources');
@@ -28,25 +29,16 @@ self.addEventListener('activate', (event) => {
   return self.clients.claim();
 });
 
-// self.addEventListener('fetch', function (event) {
-//   // console.log('👷', 'fetch', event);
-//   event.respondWith(
-//     caches.open('static-cache').then(function(cache) {
-//       return cache.match(event.request).then(function (response) {
-//         return response || fetch(event.request).then(function(response) {
-//           cache.put(event.request, response.clone());
-//           return response;
-//         });
-//       });
-//     })
-//   );
-// });
-
-
-self.addEventListener('fetch', function(event) {
+self.addEventListener('fetch', function (event) {
+  // console.log('👷', 'fetch', event);
   event.respondWith(
-    fetch(event.request).catch(function() {
-      return caches.match(event.request);
+    caches.open('static-cache').then(function(cache) {
+      return cache.match(event.request).then(function (response) {
+        return response || fetch(event.request).then(function(response) {
+          cache.put(event.request, response.clone());
+          return response;
+        });
+      });
     })
   );
 });
