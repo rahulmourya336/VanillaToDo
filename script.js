@@ -32,16 +32,17 @@ const addTask = _ => {
         return;
     }
 
-    // Check for same task
-    for (let key in localStorage) {
-        if (localStorage.hasOwnProperty(key)) {
-            if (value === localStorage.getItem(key)[0]) {
-                console.warn('Duplicate entry : Raising notification');
-                notify('Already exist', 'text-left', 'same-task');
-            }
-            // show popover
-        }
-    }
+    // Check for same task -[Pending]
+    // for (let key in localStorage) {
+    //     if (localStorage.hasOwnProperty(key)) {
+    //         if (value === localStorage.getItem(key)[0]) {
+    //             console.warn('Duplicate entry : Raising notification');
+    //             $('#notification').empty();
+    //             notify('Already exist', 'text-left', 'same-task');
+    //         }
+    //         // show popover
+    //     }
+    // }
 
 
     let localStorageLength = localStorage.length;
@@ -200,11 +201,6 @@ const resetApp = _ => {
     parent.appendChild(el);
 
     setTimeout(_ => location.href = '', 1000);
-}
-
-const dynamicUpdate = _ => {
-    console.info('Inside dynamic update');
-    $("#working").load(".menu");
 }
 
 const hide = (target) => {
