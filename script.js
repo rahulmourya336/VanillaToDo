@@ -1,9 +1,9 @@
 /**
  * TODO:
- *  1. Add PWA support [Working]
+ *  1. Add PWA support [Done]
  * 
  * Error stack:
- *  1. Shake bug fix
+ *  1. Shake bug fix [Working]
  *  2. Add IDB Support
  *     
  */
