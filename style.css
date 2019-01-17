@@ -1,12 +1,12 @@
 #wrapper {
     width: 35vw;
-    margin: 2em auto;
+    margin: 1.3em auto;
 }
 
 #footer {
     position: relative;
     bottom: 0;
-    top: 10em;
+    top: 5em;
     left: 50%;
 }
 
