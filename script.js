@@ -9,6 +9,7 @@
  */
 
 window.onload = _ => {
+    Sentry.init({ dsn: 'https://d94cebbe07ba44a4a2b837b183f90580@sentry.io/1374255' });
     addTaskUI();
     getUsername();
 
