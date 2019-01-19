@@ -4,11 +4,12 @@
  * 
  * Error stack:
  *  1. Shake bug fix [Done] :D
- *  2. Add IDB Support
- *     
+ *  2. Add IDB Support [Working]
+ *  3. Fix personalize bug     
  */
 
 window.onload = _ => {
+    console.warn('Activating Sentry');
     Sentry.init({ dsn: 'https://d94cebbe07ba44a4a2b837b183f90580@sentry.io/1374255' });
     addTaskUI();
     getUsername();
@@ -95,7 +96,8 @@ const addTaskUI = _ => {
                 if (flag) {
                     label_ = document.createElement('s');
                 }
-                label_.className = "form-checkbox";
+                label_.className = "form-checkbox text-wrap";
+                // label_.setAttribute('ondblclick', editTask(key));
 
                 const input_ = document.createElement('input');
                 input_.type = "checkbox";
@@ -123,6 +125,13 @@ const addTaskUI = _ => {
                 parent.appendChild(label_);
             }
         }
+    }
+}
+
+const cancelEdit = _ => {
+    if (document.getElementById('cancel_edit').childElementCount) {
+        $('#cancel_edit').empty();
+        reRender();
     }
 }
 
@@ -154,6 +163,7 @@ const completedTask = (id) => {
 }
 
 const editTask = (id) => {
+    cancelEdit(); // Clear cancel button, which shows more when click.
     let el = document.getElementById('btn-submit-task');
     el.innerText = "Update";
     el.className = "btn btn-success input-group-btn";
@@ -164,13 +174,18 @@ const editTask = (id) => {
     document.getElementById('input_task').focus();
 
     // Add cancel edit
-    let parent = document.getElementById('input_span');
+    let parent = document.getElementById('cancel_edit');
+
+    const span_ = document.createElement('span');
+    span_.className = "mr-2 btn btn-primary";
+    span_.setAttribute('onclick', `cancelEdit();resetSubmitButton();reRender()`);
+
+    const i_ = document.createElement('i');
+    i_.className = 'icon icon-cross';
     
-    const cancelEdit = document.createElement('i');
-    cancelEdit.className = 'icon icon-menu';
-    cancelEdit.setAttribute('onclick', `resetSubmitButton();reRender()`);
-    parent.appendChild(cancelEdit);
-    
+    span_.append(i_);
+
+    parent.appendChild(span_);
 }
 
 const updateTask = (id) => {
@@ -178,18 +193,24 @@ const updateTask = (id) => {
     
     // Check for null entry
     if (newValue === '') {
-        document.getElementById('input_task').className += ' is-error';
+        shakeTextBox();
         return;
     }
 
-    if (checkClassName('input_task', 'is-error')) {
-        let el = document.getElementById('input_task');
-        el.className = 'form-input';
+    if (!localStorage.getItem(id)){
+        let el = document.getElementById('status');
+        el.innerText = 'Task already deleted! ¯\\_(ツ)_/¯';
+        el.className = 'text-error';
+        setTimeout( _ => {$('#status').empty()}, 1000);
+        cancelEdit();
+        resetSubmitButton();
+        return;
     }
 
     let taskStatus = localStorage.getItem(id).split(',')[1];
     localStorage.setItem(id, [newValue, taskStatus]);
     resetSubmitButton();
+    cancelEdit();
     reRender();
 }
 

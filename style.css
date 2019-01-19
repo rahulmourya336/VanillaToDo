@@ -1,3 +1,9 @@
+*{
+    -webkit-transition: all 0.2s ease !important;
+    -moz-transition:    all 0.2s ease !important;
+    -ms-transition:     all 0.2s ease !important;
+    -o-transition:      all 0.2s ease !important;
+}
 #wrapper {
     width: 35vw;
     margin: 1.3em auto;
@@ -64,6 +70,10 @@ span.p-centered {
 @media screen and (max-width: 780px) {
     * {
         font-size: small;
+        -webkit-transition: all 0.2s ease !important;
+        -moz-transition:    all 0.2s ease !important;
+        -ms-transition:     all 0.2s ease !important;
+        -o-transition:      all 0.2s ease !important;
     }
 
     #wrapper {

@@ -47,15 +47,15 @@
         <figure class="avatar avatar-lg p-centered" data-initial="X" style="background-color: #5755d9;">
         </figure>
         <span class="p-centered text-center mt-2"><label for="username" class="d-none">Enter Your name</label> Hello!
-            <span id="input_span"></span>
             <input type="text" id="username" placeholder="Enter your name" autocomplete="false" onblur="setUsername()">
         </span>
         <div class="divider text-center" data-content="Todo"></div>
         <div id="notification">
-                <div id="status"></div>
-                
+
+            <div id="status"></div>
+
         </div>
-        
+
         <!-- Pop over -->
         <!-- <div class="popover popover-right">
                 <button class="btn btn-primary">right popover</button>
@@ -68,12 +68,14 @@
                   </div>
                 </div>
               </div> -->
-              <!-- End of popover -->
+        <!-- End of popover -->
         <div id="container">
             <div class="input-group">
+                <div id="cancel_edit"></div>
                 <label for="input_task" class="d-none">Enter task name</label>
                 <input type="text" class="form-input" placeholder="Task Name" id="input_task" />
-                <button class="btn btn-primary input-group-btn" onclick="addTask()" type="submit" id="btn-submit-task">Add Task</button>
+                <button class="btn btn-primary input-group-btn" onclick="addTask()" type="submit" id="btn-submit-task">Add
+                    Task</button>
             </div>
         </div>
 
@@ -93,7 +95,7 @@
         </div>
         <div id="footer_msg" class="text-center mt-2"><code class="sub"><small> Version 2.0 releasing soon!</small></code></div>
 
-        
+
 
         <div id="footer">
             <p><a href="https://github.com/rahulmourya336/VanillaToDo" target="_blank" rel="noopener">GitHub</a> ·
