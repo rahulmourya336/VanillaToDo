@@ -3,7 +3,7 @@
  *  1. Add PWA support [Done]
  * 
  * Error stack:
- *  1. Shake bug fix [Working]
+ *  1. Shake bug fix [Done] :D
  *  2. Add IDB Support
  *     
  */
@@ -14,9 +14,9 @@ window.onload = _ => {
     getUsername();
 
     // Uncomment to run service worker
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('./service-worker.js');
-    }
+    // if ('serviceWorker' in navigator) {
+    //     navigator.serviceWorker.register('./service-worker.js');
+    // }
 
     // userDB();
 }
@@ -116,7 +116,7 @@ const addTaskUI = _ => {
                 editIcon_.setAttribute('onclick', `editTask(${key})`);
 
                 label_.innerText = localStorage.getItem(key).split(',')[0];        
-                console.info("key Value: " + localStorage.getItem(key) + ' | Key : ' + key);
+                console.info("key Value: " + localStorage.getItem(key) + '  | Key : ' + key);
                 label_.setAttribute('id', key);
                 button_.setAttribute('onclick', `removeTask(${key})`);
                 label_.append(input_, icon_, button_, editIcon_);
@@ -161,14 +161,42 @@ const editTask = (id) => {
 
     let value = localStorage.getItem(id).split(',')[0];
     document.getElementById('input_task').value = value;
+    document.getElementById('input_task').focus();
+
+    // Add cancel edit
+    let parent = document.getElementById('input_span');
+    
+    const cancelEdit = document.createElement('i');
+    cancelEdit.className = 'icon icon-menu';
+    cancelEdit.setAttribute('onclick', `resetSubmitButton();reRender()`);
+    parent.appendChild(cancelEdit);
+    
 }
 
 const updateTask = (id) => {
     let newValue = document.getElementById('input_task').value.trim();
+    
+    // Check for null entry
+    if (newValue === '') {
+        document.getElementById('input_task').className += ' is-error';
+        return;
+    }
+
+    if (checkClassName('input_task', 'is-error')) {
+        let el = document.getElementById('input_task');
+        el.className = 'form-input';
+    }
+
     let taskStatus = localStorage.getItem(id).split(',')[1];
     localStorage.setItem(id, [newValue, taskStatus]);
     resetSubmitButton();
     reRender();
+}
+
+const checkClassName = (elementID, className_) => {
+    let classList_ = document.getElementById(elementID).className;
+    classList_ = classList_.split(' ');
+    return classList_.filter(x => x === className_).length;
 }
 
 const resetSubmitButton = _ => {
@@ -178,6 +206,9 @@ const resetSubmitButton = _ => {
     el.setAttribute('onclick', `addTask()`);
     // Reset input too!
     document.getElementById("input_task").value = null;
+}
+
+const clearAppendChild = _ => {
 
 }
 
@@ -214,8 +245,7 @@ const hide = (target) => {
 
 
 const shakeTextBox = _ => {
-    document.getElementById("btn-submit-task").addEventListener("click", (e) => {
-        e.preventDefault();
+        let e = document.getElementById("btn-submit-task");
         console.warn("Venom");
         document.getElementById("input_task").className = 'form-input input_shake is-error';
 
@@ -223,7 +253,6 @@ const shakeTextBox = _ => {
             setTimeout(_ => { }, 100);
             document.getElementById("input_task").className = 'form-input';
         });
-    });
 }
 
 
@@ -289,13 +318,6 @@ const notify = (message_, className_, elementID, parentID = "status") => {
     parent.append(el);
 
     document.getElementById('notification').append(divider);
-
-
-
-
-    // setTimeout(() => {
-    //     hide(parentID)
-    // }, 1500)
 }
 
 // notify('Already exist', 'text-left', 'same-task', 'status');

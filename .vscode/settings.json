@@ -1,5 +1,6 @@
 {
     "cSpell.words": [
         "entrypoint"
-    ]
+    ],
+    "liveServer.settings.wait" : 200
 }
