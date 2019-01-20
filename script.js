@@ -69,7 +69,7 @@ const redundantTask = (response) => {
     document.getElementById('same-task').remove();
     document.getElementById('secondary-divider').remove();
 
-    if (response) { markEntryLS(response); }
+    if (typeof response === 'string') { markEntryLS(response); }
 }
 
 const addTaskUI = _ => {
