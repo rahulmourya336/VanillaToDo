@@ -48,11 +48,11 @@ var hideInput = function hideInput(flag) {
     if (flag) {
         $('#input_task').hide();
         $('#btn-submit-task').hide();
-        console.warn("HIDE : Primary input hidden");
+        console.info("HIDE : Primary input hidden");
     } else {
         $('#input_task').show();
         $('#btn-submit-task').show();
-        console.warn("SHOW : Primary input visible");
+        console.info("SHOW : Primary input visible");
     }
 };
 
