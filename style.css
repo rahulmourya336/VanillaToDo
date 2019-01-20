@@ -4,6 +4,16 @@
     -ms-transition:     all 0.2s ease !important;
     -o-transition:      all 0.2s ease !important;
 }
+
+body {
+    background: url('./assets/images/bg-img.svg');
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: right;
+    background-attachment: fixed;
+    height: 100%;
+}
+
 #wrapper {
     width: 35vw;
     margin: 1.3em auto;

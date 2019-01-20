@@ -41,6 +41,7 @@
 </head>
 
 <body>
+    <div class="bg">
     <!-- Text-box -->
     <div id="wrapper">
         <div id="message"></div>
@@ -51,9 +52,7 @@
         </span>
         <div class="divider text-center" data-content="Todo"></div>
 
-        <div id="notification">
-            <div id="status"></div>
-        </div>
+        <div id="notification"><div id="status"></div></div>
 
         <div id="container">
             <div class="input-group">
@@ -79,6 +78,7 @@
                 <li class="menu-item" id="completed_task"></li>
             </ul>
         </div>
+    </div>
         <div id="footer_msg" class="text-center mt-2"><code class="sub"><small> Version 2.0 releasing soon!</small></code></div>
 
         <div id="footer">
@@ -88,11 +88,13 @@
             <p>Designed and built <s>with <span class="text-error">♥</s> using ⌨ (Keyboard)</span> by <a href="https://twitter.com/rahucrux"
                     target="_blank" rel="noopener">Rahul Mourya</a>.</p>
         </div>
+    </div>
 </body>
 
 <script src="node_modules/jquery/dist/jquery.min.js" defer></script>
 <script src="script.js" defer></script>
 <script src="https://browser.sentry-cdn.com/4.5.2/bundle.min.js" crossorigin="anonymous"></script>
+
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-132768433-1"></script>
 <script>
