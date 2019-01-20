@@ -23,7 +23,7 @@ window.onload = _ => {
 }
 
 const addTask = _ => {
-    const value = document.getElementById("input_task").value.trim();
+    value = document.getElementById("input_task").value.trim();
     document.getElementById("input_task").value = null;
     console.log('Input Value', + value.length);
 
@@ -35,30 +35,41 @@ const addTask = _ => {
     }
 
     // Check for same task -[Pending]
-    // for (let key in localStorage) {
-    //     if (localStorage.hasOwnProperty(key)) {
-    //         if (value === localStorage.getItem(key)[0]) {
-    //             console.warn('Duplicate entry : Raising notification');
-    //             $('#notification').empty();
-    //             notify('Already exist', 'text-left', 'same-task');
-    //         }
-    //         // show popover
-    //     }
-    // }
+    let flag = false;
+    for (let key in localStorage) {
+        if (localStorage.hasOwnProperty(key)) {
+            let transform = localStorage.getItem(key).split(',')[0];
+            transform = transform.replace(/\ˏ/g, ',');
+            if (value.toLowerCase() === transform.toLowerCase()) {
+                flag = true;
+                break;
+            }
+        }
+    }
+    console.warn('Duplicate entry : Raising notification');
+    if (flag) {
+        notify('Task already exist!', 'text-left', 'same-task', value);
+        return;
+    }
+    markEntryLS(value);
+}
 
+const markEntryLS = (value) => {
+    console.info('markLS Detach Module');
+    // Fix Comma issue
+    value = value.replace(/\,/g, 'ˏ');
 
     let localStorageLength = localStorage.length;
     localStorage.setItem(localStorageLength, [title = value, flag = false]);
     console.log(localStorage.length, localStorage.getItem(localStorageLength));
     reRender();
-
 }
 
-const redundantTask = _ => {
-    // After ACCEPT or DISCARD
+const redundantTask = (response) => {
     document.getElementById('same-task').remove();
     document.getElementById('secondary-divider').remove();
-    return;
+
+    if (response) { markEntryLS(response); }
 }
 
 const addTaskUI = _ => {
@@ -117,8 +128,8 @@ const addTaskUI = _ => {
                 editIcon_.className = "icon icon-edit btn-clear float-right ";
                 editIcon_.setAttribute('onclick', `editTask(${key})`);
 
-                label_.innerText = localStorage.getItem(key).split(',')[0];        
-                console.info("key Value: " + localStorage.getItem(key) + '  | Key : ' + key);
+                label_.innerText = localStorage.getItem(key).split(',')[0];
+                console.info(`key Value:  ${localStorage.getItem(key)},  Key :  ${key}`);
                 label_.setAttribute('id', key);
                 button_.setAttribute('onclick', `removeTask(${key})`);
                 label_.append(input_, icon_, button_, editIcon_);
@@ -170,6 +181,7 @@ const editTask = (id) => {
     el.setAttribute('onclick', `updateTask(${id})`);
 
     let value = localStorage.getItem(id).split(',')[0];
+    value = value.replace(/\ˏ/g, ',');
     document.getElementById('input_task').value = value;
     document.getElementById('input_task').focus();
 
@@ -182,7 +194,7 @@ const editTask = (id) => {
 
     const i_ = document.createElement('i');
     i_.className = 'icon icon-cross';
-    
+
     span_.append(i_);
 
     parent.appendChild(span_);
@@ -190,18 +202,19 @@ const editTask = (id) => {
 
 const updateTask = (id) => {
     let newValue = document.getElementById('input_task').value.trim();
-    
+    newValue = newValue.replace(/\,/g, 'ˏ');
+
     // Check for null entry
     if (newValue === '') {
         shakeTextBox();
         return;
     }
 
-    if (!localStorage.getItem(id)){
+    if (!localStorage.getItem(id)) {
         let el = document.getElementById('status');
         el.innerText = 'Task already deleted! ¯\\_(ツ)_/¯';
         el.className = 'text-error';
-        setTimeout( _ => {$('#status').empty()}, 1000);
+        setTimeout(_ => { $('#status').empty() }, 1500);
         cancelEdit();
         resetSubmitButton();
         return;
@@ -266,14 +279,14 @@ const hide = (target) => {
 
 
 const shakeTextBox = _ => {
-        let e = document.getElementById("btn-submit-task");
-        console.warn("Venom");
-        document.getElementById("input_task").className = 'form-input input_shake is-error';
+    let e = document.getElementById("btn-submit-task");
+    console.warn("Venom");
+    document.getElementById("input_task").className = 'form-input input_shake is-error';
 
-        document.getElementById('input_task').addEventListener('animationend', (e) => {
-            setTimeout(_ => { }, 100);
-            document.getElementById("input_task").className = 'form-input';
-        });
+    document.getElementById('input_task').addEventListener('animationend', (e) => {
+        setTimeout(_ => { }, 100);
+        document.getElementById("input_task").className = 'form-input';
+    });
 }
 
 
@@ -309,13 +322,12 @@ const getUsername = _ => {
 
 
 
-const notify = (message_, className_, elementID, parentID = "status") => {
-
-    let divider = document.createElement('div');
+const notify = (message_, className_, elementID, value_) => {
+    const divider = document.createElement('div');
     divider.className = "divider";
     divider.setAttribute('id', 'secondary-divider');
 
-    let el = document.createElement('div');
+    const el = document.createElement('div');
     el.className = className_;
     el.innerText = message_;
     el.setAttribute('id', elementID);
@@ -326,19 +338,19 @@ const notify = (message_, className_, elementID, parentID = "status") => {
     btn_accept.className = 'btn btn-primary float-right btn-sm';
     btn_discard.className = 'btn btn-link float-right mx-2 btn-sm';
 
-    btn_accept.setAttribute('onclick', `redundantTask();return true;`);
-    btn_discard.setAttribute('onclick', `redundantTask();return false`);
+    btn_accept.setAttribute('onclick', `redundantTask('${value_}')`);
+    btn_discard.setAttribute('onclick', `redundantTask(false)`);
+
+    btn_accept.setAttribute('id', 'cancel-btn-true');
+
+    $('#cancel-btn-true').on('click', value_, redundantTask);
 
     btn_accept.innerText = "Add";
     btn_discard.innerText = 'Discard';
 
     el.append(btn_accept, btn_discard);
 
-    let parent = document.getElementById(parentID);
-
-    parent.append(el);
+    document.getElementById('status').append(el);
 
     document.getElementById('notification').append(divider);
 }
-
-// notify('Already exist', 'text-left', 'same-task', 'status');
