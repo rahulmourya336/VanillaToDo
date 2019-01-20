@@ -163,13 +163,12 @@ const completedTask = (id) => {
     console.warn('Task Checked');
     let x = localStorage.getItem(id).split(',')[1];
     console.warn(x);
-    if (x === "true") {
-        let value = localStorage.getItem(id).split(',')[0].trim();
-        localStorage.setItem(id, [title = value, flag = false]);
-    } else {
-        let value = localStorage.getItem(id).split(',')[0].trim();
-        localStorage.setItem(id, [title = value, flag = true]);
-    }
+
+    let flag_;
+    let value = localStorage.getItem(id).split(',')[0].trim();
+    x === "true" ? flag_ = false : flag_ = true;
+
+    localStorage.setItem(id, [title = value, flag = flag_]);
     reRender();
 }
 
