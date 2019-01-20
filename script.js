@@ -34,7 +34,32 @@ const addTask = _ => {
         return;
     }
 
-    // Check for same task -[Pending]
+    let flag = checkRedundantTask(value);
+    if (flag) {
+        console.warn('Duplicate entry : Raising notification');
+        hideInput(true);
+        notify('Task already exist!', 'text-left text-error', 'same-task', value);
+        return;
+    }
+    putEntryLS(value);
+}
+
+const hideInput = (flag) => {
+    if(flag) {
+        $('#input_task').hide();
+        $('#btn-submit-task').hide();
+        console.warn("HIDE : Primary input hidden");
+    } else {
+        $('#input_task').show();
+        $('#btn-submit-task').show();
+        console.warn("SHOW : Primary input visible");
+    }
+
+   
+}
+
+const checkRedundantTask = (value) => {
+    // Check for same task -[Completed]
     let flag = false;
     for (let key in localStorage) {
         if (localStorage.hasOwnProperty(key)) {
@@ -46,15 +71,10 @@ const addTask = _ => {
             }
         }
     }
-    console.warn('Duplicate entry : Raising notification');
-    if (flag) {
-        notify('Task already exist!', 'text-left', 'same-task', value);
-        return;
-    }
-    markEntryLS(value);
+    return flag;
 }
 
-const markEntryLS = (value) => {
+const putEntryLS = (value) => {
     console.info('markLS Detach Module');
     // Fix Comma issue
     value = value.replace(/\,/g, 'ˏ');
@@ -68,8 +88,9 @@ const markEntryLS = (value) => {
 const redundantTask = (response) => {
     document.getElementById('same-task').remove();
     document.getElementById('secondary-divider').remove();
+    hideInput(false);
 
-    if (typeof response === 'string') { markEntryLS(response); }
+    if (typeof response === 'string') { putEntryLS(response); }
 }
 
 const addTaskUI = _ => {
@@ -149,6 +170,7 @@ const cancelEdit = _ => {
 const reRender = _ => {
     $('#working_task').empty();
     $('#completed_task').empty();
+    hideInput(false);
     addTaskUI();
 }
 
