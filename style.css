@@ -6,7 +6,7 @@
 }
 
 body {
-    background: url('./assets/images/bg-img.svg');
+    background: url('./assets/images/bg-img-1.svg');
     width: 100%;
     background-repeat: no-repeat;
     background-position: right;
@@ -17,6 +17,7 @@ body {
 #wrapper {
     width: 35vw;
     margin: 1.3em auto;
+    
 }
 
 #footer {
@@ -24,6 +25,7 @@ body {
     bottom: 0;
     top: 5em;
     left: 50%;
+    margin-top: 5em;
 }
 
 p {
@@ -48,6 +50,7 @@ p {
 
 input[id="username"] {
     width: 30%;
+    background: none;
 }
 
 span.p-centered {
@@ -105,6 +108,7 @@ span.p-centered {
         bottom: 0;
         top: 5em;
         left: 50%;
+        margin-top: 8em;
     }
     
 
